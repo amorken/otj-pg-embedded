@@ -21,6 +21,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.ConnectException;
 import java.net.ServerSocket;
 import java.net.UnknownHostException;
 import java.nio.channels.FileLock;
@@ -271,7 +272,7 @@ public class EmbeddedPostgres implements Closeable
                 verifyReady();
                 LOG.info("{} postmaster startup finished in {}", instanceId, watch);
                 return;
-            } catch (final SQLException e) {
+            } catch (final ConnectException | SQLException e) {
                 lastCause = e;
                 LOG.trace("While waiting for server startup", e);
             }
